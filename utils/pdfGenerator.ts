@@ -1,84 +1,56 @@
 'use client';
 
 export async function generatePdfFromElement(element: HTMLElement, filename: string): Promise<void> {
-  // Use the browser's native print-to-PDF functionality
-  // This produces pixel-perfect output since it uses the browser's own renderer
-  
-  const printContent = element.cloneNode(true) as HTMLElement;
-  
-  // Create a new window for printing
-  const printWindow = window.open('', '_blank', 'width=794,height=1123');
-  if (!printWindow) {
-    throw new Error('Could not open print window. Please allow popups for this site.');
-  }
+  const html2pdf = (await import('html2pdf.js')).default;
 
-  // Get all stylesheets from the current page
-  const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
-    .map(el => el.outerHTML)
-    .join('\n');
-
-  // Build the print page
-  printWindow.document.write(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <title>${filename}</title>
-      ${styles}
-      <style>
-        @page {
-          size: A4;
-          margin: 0;
-        }
-        * {
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
-          color-adjust: exact !important;
-        }
-        html, body {
-          margin: 0;
-          padding: 0;
-          width: 210mm;
-          background: white;
-        }
-        body > div {
-          width: 210mm;
-          min-height: 297mm;
-          margin: 0 auto;
-          overflow: visible;
-        }
-        @media print {
-          html, body {
-            margin: 0;
-            padding: 0;
-            width: 210mm;
-          }
-        }
-      </style>
-    </head>
-    <body>
-      <div>${printContent.innerHTML}</div>
-    </body>
-    </html>
-  `);
+  // Clone element to avoid modifying the original
+  const clone = element.cloneNode(true) as HTMLElement;
   
-  printWindow.document.close();
-  
-  // Wait for fonts and images to load
-  await new Promise<void>((resolve) => {
-    printWindow.onload = () => resolve();
-    // Fallback timeout if onload doesn't fire
-    setTimeout(resolve, 1500);
-  });
+  // Create offscreen container
+  const container = document.createElement('div');
+  container.style.cssText = `
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 210mm;
+    z-index: -9999;
+    opacity: 0;
+    pointer-events: none;
+    background: white;
+  `;
+  clone.style.transform = 'none';
+  clone.style.width = '100%';
+  clone.style.minHeight = '297mm';
+  container.appendChild(clone);
+  document.body.appendChild(container);
 
-  // Additional wait for web fonts
+  // Wait for layout
   await new Promise(resolve => setTimeout(resolve, 500));
 
-  // Trigger print dialog (user selects "Save as PDF")
-  printWindow.print();
-
-  // Close after a delay to allow the print dialog to open
-  setTimeout(() => {
-    printWindow.close();
-  }, 1000);
+  try {
+    await html2pdf()
+      .set({
+        margin: 0,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          letterRendering: true,
+          logging: false,
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait',
+        },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+      })
+      .from(clone)
+      .save();
+  } finally {
+    document.body.removeChild(container);
+  }
 }
