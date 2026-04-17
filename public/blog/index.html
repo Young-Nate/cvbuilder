@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog – ResumeFast | Resume Tips, Guides &amp; Career Insights</title>
+  <meta name="description" content="Tips, guides, and insights to craft the perfect resume. Expert advice from the ResumeFast team to help you land your next job." />
+  <link rel="canonical" href="https://resumefast.app/blog/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Blog – ResumeFast | Resume Tips, Guides &amp; Career Insights" />
+  <meta property="og:description" content="Tips, guides, and insights to craft the perfect resume. Expert advice from the ResumeFast team to help you land your next job." />
+  <meta property="og:url" content="https://resumefast.app/blog/" />
+  <meta property="og:site_name" content="ResumeFast" />
+  <meta property="og:image" content="https://resumefast.app/og-blog.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Blog – ResumeFast | Resume Tips, Guides &amp; Career Insights" />
+  <meta name="twitter:description" content="Tips, guides, and insights to craft the perfect resume." />
+  <meta name="twitter:image" content="https://resumefast.app/og-blog.png" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "ResumeFast Blog",
+    "description": "Tips, guides, and insights to craft the perfect resume.",
+    "url": "https://resumefast.app/blog/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ResumeFast",
+      "url": "https://resumefast.app"
+    }
+  }
+  </script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #7c3aed;
+      --purple-dark: #5b21b6;
+      --purple-light: #ede9fe;
+      --purple-mid: #8b5cf6;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+      --text-muted: #9ca3af;
+      --border: #e5e7eb;
+      --bg: #ffffff;
+      --bg-subtle: #f9fafb;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.05);
+      --shadow-hover: 0 4px 12px rgba(124,58,237,0.15), 0 8px 32px rgba(0,0,0,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    nav a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    nav a:hover { color: var(--text-primary); background: var(--bg-subtle); }
+    nav a.active { color: var(--purple); font-weight: 600; }
+
+    .nav-cta {
+      background: var(--purple) !important;
+      color: #fff !important;
+      padding: 7px 18px !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+      transition: background 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--purple-dark) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 40%, #ede9fe 100%);
+      padding: 80px 24px 72px;
+      text-align: center;
+      border-bottom: 1px solid #e9d5ff;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--purple-light);
+      color: var(--purple);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── ARTICLES SECTION ── */
+    .articles-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+    }
+
+    /* ── FEATURED CARD (first article large) ── */
+    .card-featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card-featured:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .card-featured-img {
+      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%);
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .card-featured-img svg {
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      opacity: 0.9;
+    }
+
+    .card-featured-body {
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--purple);
+      background: var(--purple-light);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .card-featured-body h2 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .card-featured-body p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .card-meta-dot {
+      width: 3px;
+      height: 3px;
+      background: var(--text-muted);
+      border-radius: 50%;
+    }
+
+    .read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--purple);
+      transition: gap 0.15s;
+    }
+
+    .read-more:hover { gap: 10px; }
+
+    /* ── REGULAR CARDS ── */
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .card-img {
+      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-body h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+
+    .card-body p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+
+    /* ── EMPTY STATE ── */
+    .more-coming {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 24px;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      color: var(--text-muted);
+    }
+
+    .more-coming h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+
+    .more-coming p { font-size: 0.9rem; }
+
+    /* ── NEWSLETTER BANNER ── */
+    .newsletter {
+      background: linear-gradient(135deg, var(--purple) 0%, #a855f7 100%);
+      padding: 64px 24px;
+      text-align: center;
+    }
+
+    .newsletter-inner {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .newsletter h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .newsletter p {
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 28px;
+      font-size: 1rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .newsletter-form button {
+      background: var(--text-primary);
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+
+    .newsletter-form button:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-subtle);
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--purple); }
+
+    .footer-copy {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      width: 100%;
+      text-align: center;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .card-featured {
+        grid-template-columns: 1fr;
+      }
+
+      .card-featured-img {
+        min-height: 200px;
+      }
+
+      .card-featured-body {
+        padding: 32px 28px;
+      }
+
+      .card-featured-body h2 {
+        font-size: 1.35rem;
+      }
+
+      nav a:not(.nav-cta) {
+        display: none;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+      }
+
+      .footer-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 56px 20px 52px; }
+      .articles-section { padding: 48px 20px 64px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="ResumeFast logo">
+            <rect width="32" height="32" rx="8" fill="#7c3aed"/>
+            <rect x="8" y="9" width="10" height="2" rx="1" fill="white"/>
+            <rect x="8" y="13" width="16" height="2" rx="1" fill="white" opacity="0.7"/>
+            <rect x="8" y="17" width="14" height="2" rx="1" fill="white" opacity="0.7"/>
+            <rect x="8" y="21" width="8" height="2" rx="1" fill="white" opacity="0.5"/>
+            <circle cx="23" cy="10" r="4" fill="#a855f7"/>
+            <path d="M21 10l1.5 1.5L25 8.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        ResumeFast
+      </a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/builder">Builder</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/builder" class="nav-cta">Build My Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-label">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1l1.25 2.53L10 3.91 8 5.86l.47 2.73L6 7.27l-2.47 1.32L4 5.86 2 3.91l2.75-.38L6 1z" fill="currentColor"/></svg>
+      ResumeFast Blog
+    </div>
+    <h1>Blog</h1>
+    <p>Tips, guides, and insights to craft the perfect resume and land your dream job.</p>
+  </section>
+
+  <!-- ARTICLES -->
+  <main class="articles-section">
+    <p class="section-title">Latest Articles</p>
+
+    <div class="articles-grid">
+
+      <!-- Featured Article -->
+      <a href="/blog/how-to-write-professional-resume-2026/" class="card-featured">
+        <div class="card-featured-img">
+          <svg viewBox="0 0 220 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Document -->
+            <rect x="30" y="10" width="120" height="160" rx="8" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+            <!-- Lines -->
+            <rect x="46" y="34" width="56" height="7" rx="3.5" fill="rgba(255,255,255,0.8)"/>
+            <rect x="46" y="50" width="88" height="4" rx="2" fill="rgba(255,255,255,0.4)"/>
+            <rect x="46" y="60" width="72" height="4" rx="2" fill="rgba(255,255,255,0.4)"/>
+            <rect x="46" y="76" width="48" height="5" rx="2.5" fill="rgba(255,255,255,0.6)"/>
+            <rect x="46" y="88" width="88" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+            <rect x="46" y="98" width="80" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+            <rect x="46" y="108" width="84" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+            <rect x="46" y="124" width="48" height="5" rx="2.5" fill="rgba(255,255,255,0.6)"/>
+            <rect x="46" y="136" width="76" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+            <rect x="46" y="146" width="60" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+            <!-- Checkmark badge -->
+            <circle cx="170" cy="30" r="20" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+            <path d="M162 30l5 5 10-10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Star -->
+            <path d="M185 90l2 4 4.5.65-3.25 3.17.77 4.48L185 100l-4.02 2.3.77-4.48L178.5 94.65l4.5-.65L185 90z" fill="rgba(255,255,255,0.6)"/>
+          </svg>
+        </div>
+        <div class="card-featured-body">
+          <span class="card-tag">Resume Writing</span>
+          <h2>How to Write a Professional Resume in 2026: A Complete Step-by-Step Guide</h2>
+          <p>Everything you need to craft a standout resume — from formatting and contact info to keywords, skills, and avoiding the most common mistakes.</p>
+          <div class="card-meta">
+            <span>April 17, 2026</span>
+            <span class="card-meta-dot"></span>
+            <span>8 min read</span>
+          </div>
+          <div style="margin-top: 20px;">
+            <span class="read-more">Read article →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- More coming placeholder -->
+      <div class="more-coming">
+        <h3>More articles coming soon</h3>
+        <p>We publish new resume tips and career guides every week. Check back soon.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="newsletter-inner">
+      <h2>Get resume tips in your inbox</h2>
+      <p>Weekly guides, templates, and job search strategies — no spam, ever.</p>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" placeholder="you@email.com" aria-label="Email address" />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">ResumeFast</span>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/builder">Builder</a>
+        <a href="/blog/">Blog</a>
+      </div>
+      <p class="footer-copy">© 2026 ResumeFast. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
