@@ -4,57 +4,81 @@ export async function generatePdfFromElement(element: HTMLElement, filename: str
   const html2canvas = (await import('html2canvas')).default;
   const { jsPDF } = await import('jspdf');
 
-  // A4 dimensions in mm and px at 96 DPI
+  // A4 dimensions
   const a4WidthMm = 210;
   const a4HeightMm = 297;
-  const a4WidthPx = 794; // 210mm at 96 DPI
 
-  // Find the scaling container and temporarily reset it
-  const scaleContainer = element.closest('.resume-preview-container') as HTMLElement;
-  const originalTransform = scaleContainer ? scaleContainer.style.transform : '';
-  const originalTransformOrigin = scaleContainer ? scaleContainer.style.transformOrigin : '';
-  const originalOverflow = element.parentElement ? element.parentElement.style.overflow : '';
+  // Clone the element into an offscreen container to avoid transform issues
+  const offscreen = document.createElement('div');
+  offscreen.style.cssText = `
+    position: fixed;
+    left: -9999px;
+    top: 0;
+    width: 794px;
+    background: white;
+    z-index: -1;
+  `;
+  
+  // Deep clone the preview element
+  const clone = element.cloneNode(true) as HTMLElement;
+  clone.style.transform = 'none';
+  clone.style.width = '794px';
+  clone.style.minHeight = '1122px';
+  clone.style.overflow = 'visible';
+  
+  offscreen.appendChild(clone);
+  document.body.appendChild(offscreen);
 
-  // Reset scale to 1:1 for accurate capture
-  if (scaleContainer) {
-    scaleContainer.style.transform = 'none';
-    scaleContainer.style.transformOrigin = 'top left';
-  }
-
-  // Ensure the parent scrollable area doesn't clip
-  const scrollParent = element.closest('.overflow-y-auto') as HTMLElement;
-  if (scrollParent) {
-    scrollParent.style.overflow = 'visible';
-  }
-
-  // Force a layout recalculation
-  void element.offsetHeight;
-
-  // Wait a tick for layout to settle
-  await new Promise(resolve => setTimeout(resolve, 100));
+  // Wait for fonts and layout to settle
+  await new Promise(resolve => setTimeout(resolve, 300));
 
   try {
-    const canvas = await html2canvas(element, {
+    const canvas = await html2canvas(clone, {
       scale: 2,
       useCORS: true,
       allowTaint: true,
       backgroundColor: '#ffffff',
-      width: a4WidthPx,
-      height: element.scrollHeight,
-      windowWidth: a4WidthPx,
+      width: 794,
+      height: clone.scrollHeight || 1122,
       logging: false,
-      removeContainer: true,
+      foreignObjectRendering: false,
+      removeContainer: false,
     });
 
-    // Create PDF
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const imgData = canvas.toDataURL('image/jpeg', 0.92);
+    // Verify canvas has content
+    if (canvas.width === 0 || canvas.height === 0) {
+      throw new Error('Canvas rendered with zero dimensions');
+    }
 
-    // Calculate proper dimensions
+    // Use PNG to avoid CORS/taint issues with toDataURL
+    let imgData: string;
+    try {
+      imgData = canvas.toDataURL('image/png');
+    } catch {
+      // If tainted, try with allowTaint disabled
+      const canvas2 = await html2canvas(clone, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: '#ffffff',
+        width: 794,
+        height: clone.scrollHeight || 1122,
+        logging: false,
+        foreignObjectRendering: false,
+        removeContainer: false,
+      });
+      imgData = canvas2.toDataURL('image/png');
+    }
+
+    const pdf = new jsPDF('p', 'mm', 'a4');
     const imgWidth = a4WidthMm;
     const imgHeight = (canvas.height * a4WidthMm) / canvas.width;
 
-    // Handle multi-page content
+    // Safety check for valid dimensions
+    if (!isFinite(imgHeight) || imgHeight <= 0) {
+      throw new Error('Invalid image dimensions');
+    }
+
     let heightLeft = imgHeight;
     let position = 0;
     let page = 0;
@@ -63,21 +87,18 @@ export async function generatePdfFromElement(element: HTMLElement, filename: str
       if (page > 0) {
         pdf.addPage();
       }
-      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
       heightLeft -= a4HeightMm;
       position -= a4HeightMm;
       page++;
+
+      // Safety: max 10 pages
+      if (page > 10) break;
     }
 
     pdf.save(filename);
   } finally {
-    // Always restore original styles
-    if (scaleContainer) {
-      scaleContainer.style.transform = originalTransform;
-      scaleContainer.style.transformOrigin = originalTransformOrigin;
-    }
-    if (scrollParent) {
-      scrollParent.style.overflow = originalOverflow || '';
-    }
+    // Clean up offscreen element
+    document.body.removeChild(offscreen);
   }
 }
