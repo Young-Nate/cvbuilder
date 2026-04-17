@@ -24,7 +24,7 @@ function convertModernColors(element: HTMLElement): void {
         
         // Apply the resolved RGB color
         if (resolved && resolved.startsWith('rgb')) {
-          (el.style as Record<string, string>)[prop] = resolved;
+          (el.style as unknown as Record<string, string>)[prop] = resolved;
         }
       }
     }
