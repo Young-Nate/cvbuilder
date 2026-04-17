@@ -9,9 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@react-pdf/renderer": "^4.4.1",
+    "@sparticuz/chromium-min": "^131.0.0",
     "next": "16.2.3",
-    "pako": "1.0.11",
+    "puppeteer-core": "^23.0.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "uuid": "^13.0.0"
