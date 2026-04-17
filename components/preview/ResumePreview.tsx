@@ -22,6 +22,8 @@ function ResumePreviewInner({ data, template, scale = 1, accentColor }: Props) {
           width: '210mm',
           minHeight: '297mm',
           overflow: 'hidden',
+          overflowWrap: 'break-word',
+          wordBreak: 'break-word',
         }}
       >
         <Template data={data} accentColor={accentColor} />
