@@ -117,14 +117,10 @@ export default function BuilderPage() {
   const handleDownloadPdf = useCallback(async () => {
     setPdfLoading(true);
     try {
-      const { generatePdfFromElement } = await import('@/utils/pdfGenerator');
-      // Find the actual resume content element (the white A4 div inside the preview)
-      const previewEl = previewRef.current?.querySelector('.bg-white.shadow-xl') as HTMLElement;
-      if (!previewEl) {
-        throw new Error('Preview element not found');
-      }
+      const { generatePdf, downloadPdf } = await import('@/utils/pdfGenerator');
+      const blob = await generatePdf(state.resume, state.template, state.accentColor);
       const name = state.resume.personal.fullName?.replace(/\s+/g, '_') || 'Resume';
-      await generatePdfFromElement(previewEl, `${name}_CV.pdf`);
+      downloadPdf(blob, `${name}_CV.pdf`);
     } catch (err) {
       console.error(err);
       alert('PDF generation failed. Please try again.');
