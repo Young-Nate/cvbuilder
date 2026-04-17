@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.4.1",
     "next": "16.2.3",
+    "pako": "^2.1.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "uuid": "^13.0.0"
