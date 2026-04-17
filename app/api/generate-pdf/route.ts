@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import chromium from '@sparticuz/chromium-min';
+import puppeteer from 'puppeteer-core';
 
-export const maxDuration = 60; // 60 seconds timeout (Vercel Pro)
+export const maxDuration = 60;
 export const dynamic = 'force-dynamic';
+
+const CHROMIUM_PACK = 'https://github.com/nicholasgasior/chromium-binaryes/releases/download/v131.0.0/chromium-v131.0.0-pack.tar';
 
 export async function POST(req: NextRequest) {
   let browser = null;
@@ -13,25 +17,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing html body' }, { status: 400 });
     }
 
-    const chromium = await import('@sparticuz/chromium');
-    const puppeteer = await import('puppeteer-core');
+    const executablePath = await chromium.executablePath(CHROMIUM_PACK);
 
-    browser = await puppeteer.default.launch({
-      args: chromium.default.args,
+    browser = await puppeteer.launch({
+      args: chromium.args,
       defaultViewport: { width: 794, height: 1123 },
-      executablePath: await chromium.default.executablePath(),
+      executablePath,
       headless: true,
     });
 
     const page = await browser.newPage();
     
     await page.setContent(html, { 
-      waitUntil: 'networkidle0',
+      waitUntil: 'domcontentloaded',
       timeout: 30000,
     });
 
-    // Wait for fonts
-    await page.evaluate(() => document.fonts.ready);
+    // Small wait for rendering
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     const pdfBuffer = await page.pdf({
       format: 'A4',
