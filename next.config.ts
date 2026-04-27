@@ -1,3 +1,4 @@
+// Build trigger: 1777278877
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
